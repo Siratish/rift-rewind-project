@@ -12,16 +12,17 @@
         <!-- LEAGUE DATA LOOKUP SECTION -->
         <section class="league-lookup">
             <h3>League Data Lookup</h3>
-            <p>Enter a summoner name to see their level and top champions!</p>
+            <p>Enter a Riot ID to see their level and top champions!</p>
             
             <!-- Lookup message container for success/error messages -->
             <div id="lookup-message" class="lookup-message" style="display: none;"></div>
             
             <div class="lookup-form-container">
-                <!-- Summoner lookup form -->
+                <!-- Riot ID lookup form -->
                 <div class="form-group">
-                    <label for="summoner-name">Summoner Name</label>
-                    <input type="text" id="summoner-name" name="summoner-name" placeholder="Enter summoner name" required>
+                    <label for="summoner-name">Riot ID</label>
+                    <input type="text" id="summoner-name" name="summoner-name" placeholder="GameName#TAG (e.g., Hide on bush#KR1)" required>
+                    <small style="color: #687078; display: block; margin-top: 4px;">Format: GameName#TAG</small>
                 </div>
                 <div class="form-group">
                     <label for="region">Region</label>
@@ -37,6 +38,11 @@
                         <option value="tr1">Turkey</option>
                         <option value="ru">Russia</option>
                         <option value="jp1">Japan</option>
+                        <option value="ph2">Philippines</option>
+                        <option value="sg2">Singapore</option>
+                        <option value="th2">Thailand</option>
+                        <option value="tw2">Taiwan</option>
+                        <option value="vn2">Vietnam</option>
                     </select>
                 </div>
                 <!-- Lookup submit button -->
@@ -53,6 +59,7 @@
         <!-- END LEAGUE DATA LOOKUP SECTION -->
 
 
+
     </main>
 
     <footer>
@@ -61,7 +68,7 @@
     
     <script>
         // League Data Lookup - Calls Riot API via Lambda
-        const RIOT_API_URL = 'https://ew4rmckxt5527hw5v3qkhrzf5i0hcoxg.lambda-url.ap-southeast-2.on.aws/'; // Replace with your Function URL
+        const RIOT_API_URL = 'YOUR_LAMBDA_FUNCTION_URL_HERE'; // Replace with your Function URL
         
         document.addEventListener('DOMContentLoaded', function() {
             const lookupBtn = document.getElementById('lookup-btn');
@@ -75,7 +82,12 @@
                 const resultsDiv = document.getElementById('summoner-results');
                 
                 if (!summonerName) {
-                    showMessage('Please enter a summoner name', 'error');
+                    showMessage('Please enter a Riot ID', 'error');
+                    return;
+                }
+                
+                if (!summonerName.includes('#')) {
+                    showMessage('Please use Riot ID format: GameName#TAG', 'error');
                     return;
                 }
                 
@@ -106,6 +118,7 @@
                         showMessage(data.error || 'Failed to fetch summoner data', 'error');
                     }
                 } catch (error) {
+                    console.error('Error:', error);
                     showMessage('Network error. Please try again.', 'error');
                 }
                 
@@ -170,6 +183,7 @@
             }, 10000);
         }
     </script>
+
 
 </body>
 </html>
