@@ -1,9 +1,9 @@
-export async function fetchSummoner(riotId, region) {
+export async function fetchSummoner(summonerName, region) {
   const API_BASE = import.meta.env.REACT_APP_API_BASE || import.meta.env.VITE_API_BASE || '';
   const res = await fetch(API_BASE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ riotId, region }),
+    body: JSON.stringify({ summonerName, region }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ message: 'Unknown error' }));

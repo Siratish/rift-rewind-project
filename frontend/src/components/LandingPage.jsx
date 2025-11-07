@@ -23,7 +23,7 @@ export default function LandingPage() {
 
         setLoading(true);
         try {
-            const body = await fetchSummoner(riotId, region);
+            const body = await fetchSummoner(`${gameName}#${tagLine}`, region);
             // Expected response: { summoner: {...}, routing_value, year, summary_exists, final_exists }
             // Save to session and navigate to insights page with route params
             sessionStorage.setItem('rr_summoner_response', JSON.stringify(body));

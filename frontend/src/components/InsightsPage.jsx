@@ -89,8 +89,8 @@ export default function InsightsPage() {
             } else {
                 // No cache or cache invalid, fetch from API using URL params
                 try {
-                    const riotId = `${gameName}#${tagLine}`;
-                    const body = await fetchSummoner(riotId, region);
+                    const summonerName = `${gameName}#${tagLine}`;
+                    const body = await fetchSummoner(summonerName, region);
                     summonerResp.current = body;
                     sessionStorage.setItem('rr_summoner_response', JSON.stringify(body));
                     
