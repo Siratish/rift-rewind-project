@@ -1,2 +1,2 @@
 # rift-rewind-project
-My Rift Rewind challenge project built on AWS
+My Rift Trivia challenge project built on AWS

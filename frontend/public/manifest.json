@@ -1,0 +1,15 @@
+{
+  "short_name": "Rift Trivia",
+  "name": "Rift Trivia",
+  "icons": [
+    {
+      "src": "rift-trivia.png",
+      "type": "image/png",
+      "sizes": "64x64 128x128 192x192 256x256 512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
