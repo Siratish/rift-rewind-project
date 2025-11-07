@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SummonerBanner from './SummonerBanner.jsx';
@@ -159,7 +159,7 @@ export default function InsightsPage() {
         return () => clearInterval(id);
     }, [loading, funFacts, funFact]);
 
-    const handleWebSocketMessage = (data) => {
+    const handleWebSocketMessage = useCallback((data) => {
         switch (data.state) {
             case 'BUSY': {
                 setStatusMessage('Another seeker is already weaving this tale... ⌛');
@@ -237,12 +237,16 @@ export default function InsightsPage() {
             default:
                 break;
         }
-    };
+    }, [navigate]);
+
+    const handleWebSocketClose = useCallback(() => {
+        setStatusMessage('Connection closed');
+    }, []);
 
     // Real WebSocket handling
     const { connected, send } = useWebSocket({
         shouldConnect: loading && !!summonerResp.current,
-        onOpen: () => {
+        onOpen: (evt, ws) => {
             setStatusMessage('Connected. Sending startJob...');
             const raw = sessionStorage.getItem('rr_summoner_response');
             if (!raw) return;
@@ -255,10 +259,10 @@ export default function InsightsPage() {
                 final_exists: body?.final_exists,
                 routing_value: body?.routing_value
             };
-            send(msg);
+            ws.send(JSON.stringify(msg));
         },
         onMessage: handleWebSocketMessage,
-        onClose: () => setStatusMessage('Connection closed'),
+        onClose: handleWebSocketClose,
     });
 
     // Show loading/progress UI
