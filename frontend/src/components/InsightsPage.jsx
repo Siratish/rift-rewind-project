@@ -56,10 +56,13 @@ export default function InsightsPage() {
             }
             
             if (!cacheValid) {
-                // Clear stale cache including progress
+                // Clear stale cache including progress and reset state
                 sessionStorage.removeItem('rr_summoner_response');
                 sessionStorage.removeItem('rr_final');
                 sessionStorage.removeItem('rr_progress');
+                setPayload(null); // Clear old payload
+                setProgress(0);
+                setStatusMessage('Calibrating arcane analyzers...');
             }
             
             if (cacheValid && cachedFinal) {
