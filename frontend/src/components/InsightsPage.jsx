@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SummonerBanner from './SummonerBanner.jsx';
@@ -56,13 +56,23 @@ export default function InsightsPage() {
             }
             
             if (!cacheValid) {
-                // Clear stale cache including progress and reset state
+                // Clear stale cache including progress and reset ALL state
                 sessionStorage.removeItem('rr_summoner_response');
                 sessionStorage.removeItem('rr_final');
                 sessionStorage.removeItem('rr_progress');
                 setPayload(null); // Clear old payload
+                setLoading(true); // Ensure loading state
                 setProgress(0);
                 setStatusMessage('Calibrating arcane analyzers...');
+                setTotalMatches(0);
+                totalMatchesRef.current = 0;
+                summonerResp.current = null;
+                // Reset quiz state
+                setCurrentFactIndex(0);
+                setSelectedAnswer(null);
+                setShowResult(false);
+                setAnsweredFacts([]);
+                setCorrectAnswers([]);
             }
             
             if (cacheValid && cachedFinal) {
@@ -162,7 +172,7 @@ export default function InsightsPage() {
         return () => clearInterval(id);
     }, [loading, funFacts, funFact]);
 
-    const handleWebSocketMessage = useCallback((data) => {
+    const handleWebSocketMessage = (data) => {
         switch (data.state) {
             case 'BUSY': {
                 setStatusMessage('Another seeker is already weaving this tale... ⌛');
@@ -240,11 +250,11 @@ export default function InsightsPage() {
             default:
                 break;
         }
-    }, [navigate]);
+    };
 
-    const handleWebSocketClose = useCallback(() => {
+    const handleWebSocketClose = () => {
         setStatusMessage('Connection closed');
-    }, []);
+    };
 
     // Real WebSocket handling
     const { connected, send } = useWebSocket({

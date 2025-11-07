@@ -25,7 +25,9 @@ export default function LandingPage() {
         try {
             const body = await fetchSummoner(`${gameName}#${tagLine}`, region);
             // Expected response: { summoner: {...}, routing_value, year, summary_exists, final_exists }
-            // Save to session and navigate to insights page with route params
+            // Clear any old data and save new summoner response
+            sessionStorage.removeItem('rr_final'); // Clear old quiz results
+            sessionStorage.removeItem('rr_progress'); // Clear old progress
             sessionStorage.setItem('rr_summoner_response', JSON.stringify(body));
             navigate(`/${region}/${encodeURIComponent(gameName)}/${encodeURIComponent(tagLine)}`);
         } catch (err) {
