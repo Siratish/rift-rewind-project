@@ -14,7 +14,7 @@ const MOCK_SUMMONER_RESPONSE = {
         level: 274
     },
     routing_value: "sea",
-    year: 2024,
+    year: new Date().getFullYear() - 1,
     summary_exists: false,
     final_exists: false
 };
@@ -39,7 +39,7 @@ const MOCK_WS_MESSAGES = [
             {
                 fact: "Your favorite champion was Ahri with a 58% win rate over 45 games.",
                 context: "Foxfire Ahri mains never go out of style. You charmed your enemies — and the victory screen — more than half the time!",
-                question: "Which champion did you play the most in 2024?",
+                question: `Which champion did you play the most in ${new Date().getFullYear() - 1}?`,
                 choices: ["Ahri", "Lux", "Yone", "Kai'Sa"],
                 correct_answer: "Ahri"
             },

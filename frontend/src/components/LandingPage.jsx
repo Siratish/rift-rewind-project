@@ -9,6 +9,8 @@ export default function LandingPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    
+    const lastYear = new Date().getFullYear() - 1;
 
     async function handleStart(e) {
         e && e.preventDefault();
@@ -42,7 +44,7 @@ export default function LandingPage() {
             <BackgroundParticles />
             <div className="max-w-2xl w-full rr-panel text-center">
                 <h1 className="text-3xl riot-gold mb-2">Rift Trivia</h1>
-                <p className="text-sm text-text-secondary mb-6">Your 2024 on the Rift, reimagined as a quiz.
+                <p className="text-sm text-text-secondary mb-6">Your {lastYear} on the Rift, reimagined as a quiz.
 Relive your journey through 10 questions only your stats can answer.</p>
 
                 <form onSubmit={handleStart} className="space-y-4">

@@ -344,6 +344,7 @@ export default function InsightsPage() {
     const summoner = payload.summoner || {};
     const allAnswered = answeredFacts.length === quizFacts.length;
     const showSummary = allAnswered && currentFactIndex >= quizFacts.length;
+    const lastYear = new Date().getFullYear() - 1;
     
     // Handle answer selection
     const handleAnswerClick = (choice) => {
@@ -514,7 +515,7 @@ export default function InsightsPage() {
                     >
                         <div className="rr-panel max-w-md">
                             <div className="text-center mb-6">
-                                <h4 className="font-bold mb-2 riot-gold text-2xl">Your Rift Trivia 2024</h4>
+                                <h4 className="font-bold mb-2 riot-gold text-2xl">Your Rift Trivia {lastYear}</h4>
                                 
                                 {/* Score display integrated into header */}
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-panel-secondary/30 border border-accent-gold/20 mb-3">

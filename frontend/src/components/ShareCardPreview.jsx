@@ -41,6 +41,7 @@ export default function ShareCardPreview({ payload }) {
     const tag = summoner?.tagLine || '';
     const regionDisplay = displayRegion(summoner?.region);
     const regionLevel = `${regionDisplay}${summoner?.level ? ` • Level ${summoner.level}` : ''}`;
+    const lastYear = new Date().getFullYear() - 1;
 
     // Highlight entire words that contain numbers (e.g., "100-sS")
     function highlightNumbers(text) {
@@ -90,7 +91,7 @@ export default function ShareCardPreview({ payload }) {
                 <div className="rr-gold-divider mb-4" />
 
                 {/* Title */}
-                <div className="font-bold text-lg riot-gold mb-3 relative z-10">Rift Trivia 2024</div>
+                <div className="font-bold text-lg riot-gold mb-3 relative z-10">Rift Trivia {lastYear}</div>
 
                 {/* Facts */}
                 <div className="space-y-2 text-[13px] leading-relaxed text-text-secondary relative z-10">
