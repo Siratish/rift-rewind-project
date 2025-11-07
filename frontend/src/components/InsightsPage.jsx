@@ -186,6 +186,19 @@ export default function InsightsPage() {
                 }, 500);
                 break;
             }
+            case 'FAIL': {
+                setStatusMessage('The arcane process has faltered... ❌');
+                setProgress(0);
+                // Clear progress cache
+                sessionStorage.removeItem('rr_progress');
+                // Show error message
+                const errorMsg = data.message || data.error || 'An unexpected error occurred during generation.';
+                setTimeout(() => {
+                    alert(`❌ Generation Failed\n\n${errorMsg}`);
+                    navigate('/');
+                }, 500);
+                break;
+            }
             case 'START_RETRIEVE_MATCH': {
                 setTotalMatches(data.total);
                 totalMatchesRef.current = data.total;
