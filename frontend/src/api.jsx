@@ -1,5 +1,9 @@
+import { API_BASE } from './config.jsx';
+
 export async function fetchSummoner(summonerName, region) {
-  const API_BASE = import.meta.env.REACT_APP_API_BASE || import.meta.env.VITE_API_BASE || '';
+  if (!API_BASE) {
+    throw new Error('API base URL not configured');
+  }
   const res = await fetch(API_BASE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
